@@ -5,7 +5,7 @@ Aplicación Android para gestionar servicios técnicos de equipos electrónicos.
 
 ---
 
-<img width="240" height="500" alt="1" src="https://github.com/user-attachments/assets/869ff92a-a4a4-483a-8653-3168b7b3d173" />
+<img width="240" height="470" alt="1" src="https://github.com/user-attachments/assets/869ff92a-a4a4-483a-8653-3168b7b3d173" />
 
 
 
