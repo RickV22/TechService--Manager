@@ -68,13 +68,13 @@ fun OrdenServicio.generarResumen(
     tipoEquipo: String,
     moneda: String = "USD"
 ): String = """
-    🔧 ORDEN DE SERVICIO #$id
-    Cliente : $nombreCliente
-    Equipo  : $tipoEquipo
-    Problema: $problemaReportado
-    Diagnóstico: ${diagnosticoTecnico.ifEmpty { "Pendiente" }}
-    Solución: ${solucionAplicada.ifEmpty { "Pendiente" }}
-    Costo   : ${costo.formatearMoneda(moneda)}
-    Estado  : ${estado.etiqueta()}
-    Fecha   : ${fechaIngreso.toFechaLegible()}
-    """.trimIndent()
+            🔧 ORDEN DE SERVICIO #$id
+            Cliente : $nombreCliente
+            Equipo  : $tipoEquipo
+            Problema: $problemaReportado
+            Diagnóstico: ${diagnosticoTecnico.ifEmpty { "Pendiente" }}
+            Solución: ${solucionAplicada.ifEmpty { "Pendiente" }}
+            Costo   : ${costo.formatearMoneda(moneda)}
+            Estado  : ${estado.etiqueta()}
+            Fecha   : ${fechaIngreso.toFechaLegible()}
+            """.trimIndent()
