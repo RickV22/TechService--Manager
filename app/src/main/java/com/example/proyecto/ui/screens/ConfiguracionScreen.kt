@@ -5,6 +5,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -144,7 +145,7 @@ fun ConfiguracionScreenContent(
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .menuAnchor()
+                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                 )
                 ExposedDropdownMenu(
                     expanded = menuMonedaAbierto,
@@ -176,13 +177,13 @@ fun ConfiguracionScreenContent(
                     onValueChange = {},
                     readOnly = true,
                     label = { Text("Orden de visualización") },
-                    leadingIcon = { Icon(Icons.Default.Sort, null) },
+                    leadingIcon = { Icon(Icons.AutoMirrored.Filled.Sort, null) },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(menuOrdenAbierto)
                     },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .menuAnchor()
+                        .menuAnchor(ExposedDropdownMenuAnchorType.PrimaryNotEditable)
                 )
                 ExposedDropdownMenu(
                     expanded = menuOrdenAbierto,

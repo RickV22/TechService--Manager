@@ -9,8 +9,8 @@ import kotlinx.coroutines.launch
 
 class OrdenServicioViewModel(private val repository: OrdenServicioRepository) : ViewModel() {
 
-    val totalOrdenes: StateFlow<Int> = repository.getTotalOrdenes()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
+    // val totalOrdenes: StateFlow<Int> = repository.getTotalOrdenes()
+    //     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
 
     val pendientes: StateFlow<Int> = repository.countByEstado(EstadoServicio.PENDIENTE)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)

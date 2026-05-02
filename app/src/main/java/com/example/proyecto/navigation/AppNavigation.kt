@@ -1,5 +1,8 @@
 package com.example.proyecto.navigation
 
+import androidx.compose.animation.*
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -20,50 +23,49 @@ fun AppNavigation(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Dashboard.route
+        startDestination = Screen.Dashboard.route,
+        enterTransition = { 
+            fadeIn(tween(300, easing = FastOutSlowInEasing)) + 
+            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start, tween(300, easing = FastOutSlowInEasing)) 
+        },
+        exitTransition = { 
+            fadeOut(tween(300, easing = FastOutSlowInEasing)) + 
+            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start, tween(300, easing = FastOutSlowInEasing)) 
+        },
+        popEnterTransition = { 
+            fadeIn(tween(300, easing = FastOutSlowInEasing)) + 
+            slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(300, easing = FastOutSlowInEasing)) 
+        },
+        popExitTransition = { 
+            fadeOut(tween(300, easing = FastOutSlowInEasing)) + 
+            slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.End, tween(300, easing = FastOutSlowInEasing)) 
+        }
     ) {
 
-        // ── Dashboard ─────────────────────────────────────────────────
         composable(Screen.Dashboard.route) {
             DashboardScreen(
                 clienteVM = clienteVM,
                 ordenVM = ordenVM,
                 configVM = configVM,
-                onNavigateToClientes = {
-                    navController.navigate(Screen.ClienteList.route)
-                },
-                onNavigateToConfig = {
-                    navController.navigate(Screen.Configuracion.route)
-                }
+                onNavigateToClientes = { navController.navigate(Screen.ClienteList.route) },
+                onNavigateToConfig = { navController.navigate(Screen.Configuracion.route) }
             )
         }
 
-        ////lista de clientes
         composable(Screen.ClienteList.route) {
             ClienteListScreen(
                 viewModel = clienteVM,
-                onClienteClick = { id ->
-                    navController.navigate(Screen.ClienteDetail.createRoute(id))
-                },
-                onAddCliente = {
-                    navController.navigate(Screen.ClienteForm.createRoute())
-                },
+                onClienteClick = { id -> navController.navigate(Screen.ClienteDetail.createRoute(id)) },
+                onAddCliente = { navController.navigate(Screen.ClienteForm.createRoute()) },
                 onBack = { navController.popBackStack() }
             )
         }
 
-        ////formulario de cliente
         composable(
             route = Screen.ClienteForm.route,
-            arguments = listOf(
-                navArgument("clienteId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                }
-            )
+            arguments = listOf(navArgument("clienteId") { type = NavType.LongType; defaultValue = -1L })
         ) { backStack ->
-            val clienteId = backStack.arguments?.getLong("clienteId")
-                .takeIf { it != -1L }
+            val clienteId = backStack.arguments?.getLong("clienteId").takeIf { it != -1L }
             ClienteFormScreen(
                 clienteId = clienteId,
                 viewModel = clienteVM,
@@ -72,65 +74,44 @@ fun AppNavigation(
             )
         }
 
-        ////detalle de cliente
         composable(
             route = Screen.ClienteDetail.route,
-            arguments = listOf(
-                navArgument("clienteId") { type = NavType.LongType }
-            )
+            arguments = listOf(navArgument("clienteId") { type = NavType.LongType })
         ) { backStack ->
             val clienteId = backStack.arguments!!.getLong("clienteId")
             ClienteDetailScreen(
                 clienteId = clienteId,
                 clienteVM = clienteVM,
-                onEditCliente = {
-                    navController.navigate(Screen.ClienteForm.createRoute(clienteId))
-                },
-                onViewEquipos = {
-                    navController.navigate(Screen.EquipoList.createRoute(clienteId))
-                },
+                onEditCliente = { navController.navigate(Screen.ClienteForm.createRoute(clienteId)) },
+                onViewEquipos = { navController.navigate(Screen.EquipoList.createRoute(clienteId)) },
                 onBack = { navController.popBackStack() }
             )
         }
 
-        ////Lista de equipos
         composable(
             route = Screen.EquipoList.route,
-            arguments = listOf(
-                navArgument("clienteId") { type = NavType.LongType }
-            )
+            arguments = listOf(navArgument("clienteId") { type = NavType.LongType })
         ) { backStack ->
             val clienteId = backStack.arguments!!.getLong("clienteId")
             EquipoListScreen(
                 clienteId = clienteId,
                 viewModel = equipoVM,
-                onEquipoClick = { equipoId ->
-                    navController.navigate(Screen.OrdenList.createRoute(equipoId))
-                },
-                onAgregarEquipo = {
-                    navController.navigate(Screen.EquipoForm.createRoute(clienteId))
-                },
-                onEditarEquipo = { equipoId ->
-                    navController.navigate(Screen.EquipoForm.createRoute(clienteId, equipoId))
-                },
+                onEquipoClick = { equipoId -> navController.navigate(Screen.OrdenList.createRoute(equipoId)) },
+                onAgregarEquipo = { navController.navigate(Screen.EquipoForm.createRoute(clienteId)) },
+                onEditarEquipo = { equipoId -> navController.navigate(Screen.EquipoForm.createRoute(clienteId, equipoId)) },
                 onBack = { navController.popBackStack() }
             )
         }
 
-        ////formulario de equipo
         composable(
             route = Screen.EquipoForm.route,
             arguments = listOf(
                 navArgument("clienteId") { type = NavType.LongType },
-                navArgument("equipoId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                }
+                navArgument("equipoId") { type = NavType.LongType; defaultValue = -1L }
             )
         ) { backStack ->
             val clienteId = backStack.arguments!!.getLong("clienteId")
-            val equipoId  = backStack.arguments?.getLong("equipoId")
-                .takeIf { it != -1L }
+            val equipoId  = backStack.arguments?.getLong("equipoId").takeIf { it != -1L }
             EquipoFormScreen(
                 clienteId = clienteId,
                 equipoId  = equipoId,
@@ -140,42 +121,30 @@ fun AppNavigation(
             )
         }
 
-        ////lista de órdenes
         composable(
             route = Screen.OrdenList.route,
-            arguments = listOf(
-                navArgument("equipoId") { type = NavType.LongType }
-            )
+            arguments = listOf(navArgument("equipoId") { type = NavType.LongType })
         ) { backStack ->
             val equipoId = backStack.arguments!!.getLong("equipoId")
             OrdenListScreen(
                 equipoId = equipoId,
                 equipoVM = equipoVM,
                 ordenVM  = ordenVM,
-                alVerOrden = { ordenId ->
-                    navController.navigate(Screen.OrdenDetail.createRoute(ordenId))
-                },
-                alAgregarOrden = {
-                    navController.navigate(Screen.OrdenForm.createRoute(equipoId))
-                },
+                alVerOrden = { ordenId -> navController.navigate(Screen.OrdenDetail.createRoute(ordenId)) },
+                alAgregarOrden = { navController.navigate(Screen.OrdenForm.createRoute(equipoId)) },
                 onBack = { navController.popBackStack() }
             )
         }
 
-        ////formulario de orden
         composable(
             route = Screen.OrdenForm.route,
             arguments = listOf(
                 navArgument("equipoId") { type = NavType.LongType },
-                navArgument("ordenId") {
-                    type = NavType.LongType
-                    defaultValue = -1L
-                }
+                navArgument("ordenId") { type = NavType.LongType; defaultValue = -1L }
             )
         ) { backStack ->
             val equipoId = backStack.arguments!!.getLong("equipoId")
-            val ordenId  = backStack.arguments?.getLong("ordenId")
-                .takeIf { it != -1L }
+            val ordenId  = backStack.arguments?.getLong("ordenId").takeIf { it != -1L }
             OrdenFormScreen(
                 equipoId  = equipoId,
                 ordenId   = ordenId,
@@ -185,12 +154,9 @@ fun AppNavigation(
             )
         }
 
-        ////detalle de orden
         composable(
             route = Screen.OrdenDetail.route,
-            arguments = listOf(
-                navArgument("ordenId") { type = NavType.LongType }
-            )
+            arguments = listOf(navArgument("ordenId") { type = NavType.LongType })
         ) { backStack ->
             val ordenId = backStack.arguments!!.getLong("ordenId")
             OrdenDetailScreen(
@@ -198,9 +164,7 @@ fun AppNavigation(
                 equipoVM      = equipoVM,
                 ordenVM       = ordenVM,
                 clienteVM     = clienteVM,
-                alEditarOrden = { equipoId ->
-                    navController.navigate(Screen.OrdenForm.createRoute(equipoId, ordenId))
-                },
+                alEditarOrden = { eqId -> navController.navigate(Screen.OrdenForm.createRoute(eqId, ordenId)) },
                 onBack = { navController.popBackStack() }
             )
         }

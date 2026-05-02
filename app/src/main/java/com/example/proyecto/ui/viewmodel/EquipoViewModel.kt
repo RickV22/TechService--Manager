@@ -14,8 +14,8 @@ class EquipoViewModel(private val repository: EquipoRepository) : ViewModel() {
 
     fun getEquipoById(id: Long): Flow<Equipo?> = repository.getEquipoById(id)
 
-    val totalEquipos: StateFlow<Int> = repository.getTotalEquipos()
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
+    // val totalEquipos: StateFlow<Int> = repository.getTotalEquipos()
+    //     .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
 
     fun insertEquipo(equipo: Equipo) = viewModelScope.launch {
         repository.insertEquipo(equipo)
