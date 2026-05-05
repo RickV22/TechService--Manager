@@ -2,7 +2,7 @@
 
 # 🔧 TechService Manager
 
-Aplicación Android para gestionar servicios técnicos de equipos electrónicos. Desarrollada como proyecto universitario usando las tecnologías modernas de Android.
+Proyecto de estudios. Aplicación Android para gestionar servicios técnicos de equipos electrónicos. Desarrollada como proyecto universitario usando las tecnologías modernas de Android.
 
 ---
 | | | |
