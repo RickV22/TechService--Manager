@@ -11,9 +11,9 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@drawable/tech"
+        android:icon="@drawable/techservice"
         android:label="TechService"
-        android:roundIcon="@drawable/tech"
+        android:roundIcon="@drawable/techservice"
         android:supportsRtl="true"
         android:theme="@style/Theme.Proyecto">
 
