@@ -1,5 +1,3 @@
-
-
 # 🔧 TechService Manager
 
 Proyecto de estudios. Aplicación Android para gestionar servicios técnicos de equipos electrónicos. Desarrollada como proyecto universitario usando las tecnologías modernas de Android.
@@ -111,7 +109,7 @@ Un cliente puede tener varios equipos y cada equipo puede tener varias órdenes 
 
 ---
 
-## 🚀 Cómo correr el proyecto
+## Cómo correr el proyecto
 
 1. Clona el repositorio
 ```bash
@@ -136,15 +134,3 @@ git clone https://github.com/tu-usuario/techservice-manager.git
 - Manejo de datos reactivos con Flow y StateFlow
 - Construcción de interfaces con Jetpack Compose y Material Design 3
 
----
-
-## 👤 Autor
-
-**Ricardo Valiente**
-Estudiante de Ingeniería Telemática
-
----
-
-## 📄 Licencia
-
-Este proyecto fue desarrollado con fines educativos.
